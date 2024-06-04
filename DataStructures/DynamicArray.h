@@ -57,13 +57,6 @@ namespace ds
             return data[index];
         }
 
-        // Function for swapping one array's data for another's.
-        void swapArray(DynamicArray &other)
-        {
-            std::swap(size, other.size);
-            std::swap(data, other.data);
-        }
-
         DynamicArray &operator=(DynamicArray const &other)
         {
             if (this != &other)
@@ -114,5 +107,12 @@ namespace ds
     private:
         size_t size;
         T *data;
+
+        // Function for swapping one array's data for another's.
+        void swapArray(DynamicArray &other)
+        {
+            std::swap(size, other.size);
+            std::swap(data, other.data);
+        }
     };
 }

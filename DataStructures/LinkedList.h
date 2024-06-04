@@ -85,13 +85,6 @@ namespace ds
             return getValue(index);
         }
 
-        void swapList(LinkedList &other)
-        {
-            std::swap(size, other.size);
-            std::swap(head, other.head);
-            std::swap(tail, other.tail);
-        }
-
         LinkedList &operator=(LinkedList const &other)
         {
             if (this != &other)
@@ -308,6 +301,13 @@ namespace ds
                 i++;
             }
             return traverseNode->getData();
+        }
+
+        void swapList(LinkedList &other)
+        {
+            std::swap(size, other.size);
+            std::swap(head, other.head);
+            std::swap(tail, other.tail);
         }
     };
 };
