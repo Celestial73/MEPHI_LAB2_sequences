@@ -13,7 +13,6 @@ namespace ds
         LinkedList<T> list;
 
     public:
-        // Constructors
         ListSequence(const T *items, int count)
         {
             list = LinkedList<T>(items, count);
@@ -43,7 +42,6 @@ namespace ds
             }
         }
 
-        // Operators
         T &operator[](int index)
         {
             return list[index];
@@ -60,7 +58,6 @@ namespace ds
             return list == other.list;
         }
 
-        // Getters and setters
         const T &getFirst() const
         {
             return list.get(0);
@@ -68,7 +65,7 @@ namespace ds
 
         const T &getLast() const
         {
-            return list.get(list.getSize() - 1);
+            return list.getLast();
         }
 
         const T &get(int index) const

@@ -41,7 +41,6 @@ namespace ds
     class LinkedList
     {
     public:
-        // Constructors
         LinkedList() : head(NULL), tail(NULL), size(0){};
 
         LinkedList(const T *items, int count) : head(NULL), tail(NULL), size(0)
@@ -81,7 +80,6 @@ namespace ds
             }
         }
 
-        // Operators
         T &operator[](int index)
         {
             return getValue(index);
@@ -123,17 +121,16 @@ namespace ds
             return 1;
         }
 
-        // Getters and Setters
         int getSize() const
         {
             return this->size;
         }
-        T &getFirst()
+        const T &getFirst() const
         {
             validateListNotEmpty(__FUNCTION__, size);
             return this->head->getData();
         }
-        T &getLast()
+        const T &getLast() const
         {
             validateListNotEmpty(__FUNCTION__, size);
             return this->tail->getData();
