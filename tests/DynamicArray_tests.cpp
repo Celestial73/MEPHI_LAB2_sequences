@@ -48,10 +48,6 @@ void testArrayGet()
         exceptionCaught = true;
     }
     IS_TRUE(exceptionCaught);
-    if (exceptionCaught)
-    {
-        std::cout << "As it should have" << std::endl;
-    }
     arr1.set(0, 2);
     a = arr1.get(2);
     IS_TRUE(a == 0);
@@ -81,10 +77,6 @@ void testArrayBrackets()
         exceptionCaught = true;
     }
     IS_TRUE(exceptionCaught);
-    if (exceptionCaught)
-    {
-        std::cout << "As it should have" << std::endl;
-    }
     arr1.set(0, 2);
     a = arr1[2];
     IS_TRUE(a == 0);

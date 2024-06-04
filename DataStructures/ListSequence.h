@@ -27,7 +27,7 @@ namespace ds
 
         ListSequence(const ListSequence<T> &other)
         {
-            list = other.list;
+            list = LinkedList(other.list);
         }
 
         explicit ListSequence(const LinkedList<T> &data)
@@ -61,34 +61,29 @@ namespace ds
         }
 
         // Getters and setters
-        T &getFirst()
+        const T &getFirst() const
         {
-            return list[0];
+            return list.get(0);
         }
 
-        T &getLast()
+        const T &getLast() const
         {
-            return list[list.getSize() - 1];
+            return list.get(list.getSize() - 1);
         }
 
-        T &get(int index)
+        const T &get(int index) const
         {
             return list.get(index);
-        }
-
-        T getValue(int index) const
-        {
-            return list.getValue(index);
         }
 
         int getSize() const
         {
             return list.getSize();
         }
-        Sequence<T> *set(const T &item, int index)
+        Sequence<T> &set(const T &item, int index)
         {
             list.set(item, index);
-            return this;
+            return *this;
         }
 
         Sequence<T> *copySequence()
@@ -96,10 +91,10 @@ namespace ds
             return (new ListSequence<T>(*this));
         }
 
-        ListSequence<T> *append(const T &item)
+        ListSequence<T> &append(const T &item)
         {
             list.append(item);
-            return this;
+            return *this;
         }
 
         ListSequence<T> *getSubsequence(int startIndex, int endIndex)
@@ -109,26 +104,26 @@ namespace ds
             return subSequence;
         }
 
-        ListSequence<T> *prepend(const T &item)
+        ListSequence<T> &prepend(const T &item)
         {
             list.prepend(item);
-            return this;
+            return *this;
         }
 
-        ListSequence<T> *insertAt(const T &item, int index)
+        ListSequence<T> &insertAt(const T &item, int index)
         {
             list.insertAt(item, index);
-            return this;
+            return *this;
         }
 
-        ListSequence<T> *concat(const Sequence<T> &other)
+        ListSequence<T> &concat(const Sequence<T> &other)
         {
             int otherSize = other.getSize();
             for (int i = 0; i < otherSize; i++)
             {
-                append(other.getValue(i));
+                append(other.get(i));
             }
-            return this;
+            return *this;
         }
     };
 }

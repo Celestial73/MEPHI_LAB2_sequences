@@ -1,14 +1,13 @@
 #pragma once
 #include <iostream>
+#include "../utility/AccessValidation.h"
 
 namespace ds
 {
-    // second arg is a null value
     template <class T>
     class DynamicArray
     {
     public:
-        // Constructors
         DynamicArray(int size) : size(size), data(new T[size])
         {
         }
@@ -33,15 +32,14 @@ namespace ds
         {
         }
 
-        // Destructor
         ~DynamicArray()
         {
             delete[] data;
         }
 
-        // Operators
-        bool operator==(DynamicArray<T> other)
+        bool operator==(const DynamicArray<T> &other) const
         {
+
             if (size != other.getSize())
                 return 0;
 
@@ -53,10 +51,9 @@ namespace ds
             return 1;
         }
 
-        // const method returning reference
         T &operator[](int index) const
         {
-            validateAccessByIndex(index, __FUNCTION__);
+            validateAccessByIndex(index, __FUNCTION__, size);
             return data[index];
         }
 
@@ -71,12 +68,12 @@ namespace ds
         {
             if (this != &other)
             {
-                DynamicArray(other).swapArray(*this);
+                DynamicArray tempArray(other);
+                tempArray.swapArray(*this);
             }
             return *this;
         }
 
-        // Getters and setters
         size_t getSize() const
         {
             return size;
@@ -84,22 +81,22 @@ namespace ds
 
         T &get(int index)
         {
-            validateListNotEmpty(__FUNCTION__);
-            validateIndex(index, __FUNCTION__);
+            validateListNotEmpty(__FUNCTION__, size);
+            validateIndex(index, __FUNCTION__, size);
             return data[index];
         }
 
-        T getValue(int index) const
+        const T &get(int index) const
         {
-            validateListNotEmpty(__FUNCTION__);
-            validateIndex(index, __FUNCTION__);
+            validateListNotEmpty(__FUNCTION__, size);
+            validateIndex(index, __FUNCTION__, size);
             return data[index];
         }
 
         void set(const T value, int index)
         {
-            validateListNotEmpty(__FUNCTION__);
-            validateIndex(index, __FUNCTION__);
+            validateListNotEmpty(__FUNCTION__, size);
+            validateIndex(index, __FUNCTION__, size);
             data[index] = value;
         }
 
@@ -117,34 +114,5 @@ namespace ds
     private:
         size_t size;
         T *data;
-
-        void validateListNotEmpty(const char *function) const
-        {
-            if (size == 0)
-            {
-                std::cout << function << "function failed" << std::endl;
-                throw std::logic_error("ReadingEmptyList");
-            }
-        }
-
-        void validateIndex(int index, const char *function) const
-        {
-            if (index >= size)
-            {
-                std::cout << function << "function failed" << std::endl;
-                throw std::invalid_argument("IndexOutOfRange");
-            }
-            if (index < 0)
-            {
-                std::cout << function << "function failed" << std::endl;
-                throw std::invalid_argument("NegativeIndexValue");
-            }
-        }
-
-        void validateAccessByIndex(int index, const char *function) const
-        {
-            validateListNotEmpty(function);
-            validateIndex(index, function);
-        }
     };
 }

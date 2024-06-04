@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "../utility/AccessValidation.h"
 using namespace std;
 
 namespace ds
@@ -8,14 +9,9 @@ namespace ds
     class Node
     {
     public:
-        // Constructors
-
-        // null element
-        Node() : data(NULL), next(NULL){};
-        // make const reference
+        Node() : next(NULL){};
         Node(const T &data) : data(data), next(NULL){};
 
-        // Getters and setters
         void setData(const T &data)
         {
             this->data = data;
@@ -59,7 +55,7 @@ namespace ds
         {
             for (size_t i = 0; i < count; i++)
             {
-                append(0);
+                append();
             }
         };
 
@@ -75,20 +71,20 @@ namespace ds
 
         ~LinkedList()
         {
-            Node<T> *traverseNode1 = head;
-            Node<T> *traverseNode2;
-            while (traverseNode1)
+            Node<T> *deletionNode = head;
+            Node<T> *traverseNode;
+            while (deletionNode)
             {
-                traverseNode2 = traverseNode1->getNext();
-                delete traverseNode1;
-                traverseNode1 = traverseNode2;
+                traverseNode = deletionNode->getNext();
+                delete deletionNode;
+                deletionNode = traverseNode;
             }
         }
 
         // Operators
         T &operator[](int index)
         {
-            return get(index);
+            return getValue(index);
         }
 
         void swapList(LinkedList &other)
@@ -102,7 +98,8 @@ namespace ds
         {
             if (this != &other)
             {
-                LinkedList(other).swapList(*this);
+                LinkedList tempList(other);
+                tempList.swapList(*this);
             }
             return *this;
         }
@@ -133,38 +130,18 @@ namespace ds
         }
         T &getFirst()
         {
-            validateListNotEmpty(__FUNCTION__);
+            validateListNotEmpty(__FUNCTION__, size);
             return this->head->getData();
         }
         T &getLast()
         {
-            validateListNotEmpty(__FUNCTION__);
+            validateListNotEmpty(__FUNCTION__, size);
             return this->tail->getData();
         }
 
-        T &get(int index)
+        const T &get(int index) const
         {
-            validateAccessByIndex(index, __FUNCTION__);
-            Node<T> *traverseNode = this->head;
-            size_t i = 0;
-            while (i != index)
-            {
-                traverseNode = traverseNode->getNext();
-                i++;
-            }
-            return traverseNode->getData();
-        }
-        T getValue(int index) const
-        {
-            validateAccessByIndex(index, __FUNCTION__);
-            Node<T> *traverseNode = this->head;
-            size_t i = 0;
-            while (i != index)
-            {
-                traverseNode = traverseNode->getNext();
-                i++;
-            }
-            return traverseNode->getData();
+            return getValue(index);
         }
 
         void set(const T &item, int index)
@@ -176,19 +153,9 @@ namespace ds
         void append(const T data)
         {
             Node<T> *newNode = new Node<T>(data);
-            if (size == 0)
-            {
-                this->head = newNode;
-                this->tail = newNode;
-                this->head->setNext(NULL);
-                this->size++;
-                return;
-            }
-            this->tail->setNext(newNode);
-            this->tail = newNode;
-            this->size++;
-            return;
+            appendNode(newNode);
         }
+
         void prepend(const T &data)
         {
             Node<T> *newNode = new Node<T>(data);
@@ -209,8 +176,8 @@ namespace ds
 
         LinkedList<T> *getSublist(int startIndex, int endIndex) const
         {
-            validateAccessByIndex(startIndex, __FUNCTION__);
-            validateAccessByIndex(endIndex, __FUNCTION__);
+            validateAccessByIndex(startIndex, __FUNCTION__, size);
+            validateAccessByIndex(endIndex, __FUNCTION__, size);
             if (startIndex > endIndex)
             {
                 std::cout << __FUNCTION__ << " function failed" << std::endl;
@@ -231,7 +198,7 @@ namespace ds
 
         void insertAt(const T &data, int index)
         {
-            validateListNotEmpty(__FUNCTION__);
+            validateListNotEmpty(__FUNCTION__, size);
             // Can't use validateAccessByIndex(), because (index == size) case is acceptable
             // validateAccessByIndex() would throw an exception
             if (index > size)
@@ -280,16 +247,11 @@ namespace ds
         // Appends the passed list to this list
         LinkedList<T> *concat(LinkedList<T> *other) const
         {
-            LinkedList<T> *newList = new LinkedList<T>();
+            LinkedList<T> *newList = new LinkedList<T>(*this);
 
             Node<T> *thisListNode = this->head;
             Node<T> *otherListNode = other->head;
 
-            for (size_t i = 0; i < this->size; i++)
-            {
-                newList->append(thisListNode->getData());
-                thisListNode = thisListNode->getNext();
-            }
             for (size_t i = 0; i < other->getSize(); i++)
             {
                 newList->append(otherListNode->getData());
@@ -302,38 +264,32 @@ namespace ds
         Node<T> *head;
         Node<T> *tail;
         int size;
-        void validateListNotEmpty(const char *function) const
+
+        void append()
+        {
+            Node<T> *newNode = new Node<T>();
+            appendNode(newNode);
+        }
+
+        void appendNode(Node<T> *node)
         {
             if (size == 0)
             {
-                std::cout << function << " function failed" << std::endl;
-                throw std::logic_error("ReadingEmptyList");
+                this->head = node;
+                this->tail = node;
+                this->head->setNext(NULL);
+                this->size++;
+                return;
             }
-        }
-
-        void validateIndex(int index, const char *function) const
-        {
-            if (index >= size)
-            {
-                std::cout << function << " function failed" << std::endl;
-                throw std::invalid_argument("IndexOutOfRange");
-            }
-            if (index < 0)
-            {
-                std::cout << function << " function failed" << std::endl;
-                throw std::invalid_argument("NegativeIndexValue");
-            }
-        }
-
-        void validateAccessByIndex(int index, const char *function) const
-        {
-            validateListNotEmpty(function);
-            validateIndex(index, function);
+            this->tail->setNext(node);
+            this->tail = node;
+            this->size++;
+            return;
         }
 
         Node<T> *getNode(int index) const
         {
-            validateAccessByIndex(index, __FUNCTION__);
+            validateAccessByIndex(index, __FUNCTION__, size);
             Node<T> *traverseNode = this->head;
             size_t i = 0;
             while (i != index)
@@ -342,6 +298,19 @@ namespace ds
                 i++;
             }
             return traverseNode;
+        }
+
+        T &getValue(int index) const
+        {
+            validateAccessByIndex(index, __FUNCTION__, size);
+            Node<T> *traverseNode = this->head;
+            size_t i = 0;
+            while (i != index)
+            {
+                traverseNode = traverseNode->getNext();
+                i++;
+            }
+            return traverseNode->getData();
         }
     };
 };

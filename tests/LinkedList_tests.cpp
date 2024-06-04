@@ -24,10 +24,6 @@ void testEmptyConstructor()
         exceptionCaught = true;
     }
     IS_TRUE(exceptionCaught);
-    if (exceptionCaught)
-    {
-        std::cout << "As it should have" << std::endl;
-    }
     std::cout << "LinkedList empty Constructor test passed" << std::endl;
 }
 
@@ -89,10 +85,6 @@ void testListGetters()
         exceptionCaught = true;
     }
     IS_TRUE(exceptionCaught);
-    if (exceptionCaught)
-    {
-        std::cout << "As it should have" << std::endl;
-    }
     std::cout << "LinkedList getters tests passed" << std::endl;
 }
 

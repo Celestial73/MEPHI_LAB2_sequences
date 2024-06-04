@@ -29,9 +29,8 @@ void testImmutableArraySequenceSetters()
     {
         int items[] = {1, 2, 3, 4, 5};
         ds::ImmutableArraySequence<int> arrSeq(items, 5);
-        ds::ImmutableArraySequence<int> *seqWithSet = arrSeq.set(10, 0);
-        IS_TRUE((*seqWithSet)[0] == 10);
-        delete seqWithSet;
+        ds::ImmutableArraySequence<int> seqWithSet = arrSeq.set(10, 0);
+        IS_TRUE((seqWithSet)[0] == 10);
         ds::ImmutableArraySequence<int> *seqWithInsert = arrSeq.insertAt(20, 1);
         IS_TRUE((*seqWithInsert)[1] == 20);
         delete seqWithInsert;

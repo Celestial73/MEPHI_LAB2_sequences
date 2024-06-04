@@ -13,7 +13,6 @@ namespace ds
         DynamicArray<T> array;
 
     public:
-        // Constructors
         ArraySequence(const T *items, int count)
         {
             array = DynamicArray<T>(items, count);
@@ -62,36 +61,69 @@ namespace ds
             return array == other.array;
         }
 
-        // Getters and setters
         int getSize() const
         {
             return array.getSize();
         }
 
-        T &getFirst()
+        const T &getFirst() const
         {
             return array[0];
         }
 
-        T &getLast()
+        const T &getLast() const
         {
             return array[array.getSize() - 1];
         }
 
-        T &get(int index)
+        const T &get(int index) const
         {
             return array.get(index);
         }
 
-        T getValue(int index) const
-        {
-            return array.getValue(index);
-        }
-
-        ArraySequence<T> *set(const T &item, int index)
+        ArraySequence<T> &set(const T &item, int index)
         {
             array.set(item, index);
-            return this;
+            return *this;
+        }
+
+        ArraySequence<T> &append(const T &item)
+        {
+            array.resize(getSize() + 1);
+            array[getSize() - 1] = item;
+            return *this;
+        }
+
+        ArraySequence<T> &prepend(const T &item)
+        {
+            array.resize(array.getSize() + 1);
+            for (int i = array.getSize() - 2; i >= 0; i--)
+            {
+                array[i + 1] = array[i];
+            }
+            array[0] = item;
+            return *this;
+        }
+
+        ArraySequence<T> &insertAt(const T &item, int index)
+        {
+            array.resize(array.getSize() + 1);
+            for (int i = array.getSize() - 2; i >= index; i--)
+            {
+                array[i + 1] = array[i];
+            }
+            array[index] = item;
+            return *this;
+        }
+
+        ArraySequence<T> &concat(const Sequence<T> &other)
+        {
+            int otherSize = other.getSize();
+            for (int i = 0; i < otherSize; i++)
+            {
+                this->append(other.get(i));
+            }
+            return *this;
         }
 
         ArraySequence<T> *getSubsequence(int startIndex, int endIndex)
@@ -109,48 +141,9 @@ namespace ds
             return subSequence;
         }
 
-        ArraySequence<T> *append(const T &item)
-        {
-            array.resize(getSize() + 1);
-            array[getSize() - 1] = item;
-            return this;
-        }
-
-        ArraySequence<T> *prepend(const T &item)
-        {
-            array.resize(array.getSize() + 1);
-            for (int i = array.getSize() - 2; i >= 0; i--)
-            {
-                array[i + 1] = array[i];
-            }
-            array[0] = item;
-            return this;
-        }
-
-        ArraySequence<T> *insertAt(const T &item, int index)
-        {
-            array.resize(array.getSize() + 1);
-            for (int i = array.getSize() - 2; i >= index; i--)
-            {
-                array[i + 1] = array[i];
-            }
-            array[index] = item;
-            return this;
-        }
-
         ArraySequence<T> *copySequence()
         {
             return (new ArraySequence<T>(*this));
-        }
-
-        ArraySequence<T> *concat(const Sequence<T> &other)
-        {
-            int otherSize = other.getSize();
-            for (int i = 0; i < otherSize; i++)
-            {
-                this->append(other.getValue(i));
-            }
-            return this;
         }
     };
 }

@@ -5,9 +5,7 @@
 #include "TestMacros.h"
 
 void testArraySequence();
-void testArraySequenceSequenceConstructor();
 void testArraySequenceItemsConstructor();
-void testArraySequenceSizeConsturctor();
 void testArraySequenceCopyConstructor();
 void testArraySequenceGetters();
 void testArraySequenceSetters();
@@ -15,3 +13,5 @@ void testArraySequenceBracketsOperator();
 void testArraySequenceAssignmentOperator();
 void testGetSubSequence();
 void testArraySequenceConcat();
+
+void printSequence();

@@ -1,16 +1,15 @@
-#include <iostream>
 #include "PrintFunctions.h"
 
 using namespace std;
 
-template <typename T>
-void printArray(ds::ArraySequence<T> *array, void print(T))
-{
-    cout << "Array consists of " << array->getLength() << " numbers\n";
-    for (int i = 0; i < array->getLength(); i++)
-        print(array->get(i));
-    cout << std::endl;
-};
+// template <typename T>
+// void printArray(ds::ArraySequence<T> *array, void print(T))
+// {
+//     cout << "Array consists of " << array->getSize() << " numbers\n";
+//     for (int i = 0; i < array->getSize(); i++)
+//         print(array->get(i));
+//     cout << std::endl;
+// };
 
 void printIntegerArray(ds::ArraySequence<int> *array)
 {
@@ -51,6 +50,7 @@ void printManuallyQuestion()
 void printMainMenu()
 {
     cout << "Enter 1 - To test an ArraySequence" << endl;
-    cout << "Enter 2 - To test a ListSequence" << endl;
-    cout << "Enter 3 - To run tests" << endl;
+    // cout << "Enter 3 - To test a ListSequence (not available)" << endl;
+    cout << "Enter 2 - To run tests" << endl;
+    cout << "Enter 3 - To Cancel" << endl;
 };

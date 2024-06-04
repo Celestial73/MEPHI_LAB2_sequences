@@ -54,22 +54,22 @@ namespace ds
             return array.getSize();
         }
 
-        T getFirst() const
+        const T &getFirst() const
         {
             return array[0];
         }
 
-        T getLast() const
+        const T &getLast() const
         {
             return array[array.getSize() - 1];
         }
 
-        T get(int index) const
+        const T &get(int index) const
         {
-            return array.getValue(index);
+            return array.get(index);
         }
 
-        T operator[](int index) const
+        const T &operator[](int index) const
         {
             return array[index];
         }
@@ -79,13 +79,13 @@ namespace ds
             return array == other.array;
         }
 
-        ImmutableArraySequence<T> *set(const T item, int index) const
+        ImmutableArraySequence<T> &set(const T item, int index) const
         {
             DynamicArray<T> newArray = DynamicArray<T>(array);
             newArray[index] = item;
             ImmutableArraySequence<T> *newSeq = new ImmutableArraySequence<T>(newArray);
 
-            return newSeq;
+            return *newSeq;
         }
 
         ImmutableArraySequence<T> *getSubsequence(int startIndex, int endIndex) const
@@ -99,7 +99,7 @@ namespace ds
             ImmutableArraySequence<T> *subSequence = new ImmutableArraySequence<T>;
             for (size_t i = startIndex; i <= endIndex; i++)
             {
-                subSequence->append(array.getValue(i));
+                subSequence->append(array.get(i));
             }
             return subSequence;
         }

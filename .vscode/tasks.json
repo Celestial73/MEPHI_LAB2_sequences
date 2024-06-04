@@ -18,6 +18,12 @@
                 "${fileDirname}\\tests\\ImmutableArraySequence_tests.cpp",
                 "-g",
                 "${fileDirname}\\tests\\ListSequence_tests.cpp",
+                "-g",
+                "${fileDirname}\\utility\\AccessValidation.cpp",
+                "-g",
+                "${fileDirname}\\UI\\PrintFunctions.cpp",
+                "-g",
+                "${fileDirname}\\UI\\Menu.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],

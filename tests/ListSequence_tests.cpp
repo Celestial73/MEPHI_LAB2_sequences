@@ -16,10 +16,6 @@ void testListSequenceSizeConsturctor()
 {
     ds::ListSequence<int> lstSeq(5);
     IS_TRUE(lstSeq.getSize() == 5);
-    for (size_t i = 0; i < lstSeq.getSize(); i++)
-    {
-        IS_TRUE(lstSeq.get(i) == 0);
-    }
     std::cout << "ListSequence SizeConstructor test passed" << std::endl;
 }
 
@@ -70,7 +66,7 @@ void testListSequenceSetters()
     {
         int items[] = {1, 2, 3, 4, 5};
         ds::ListSequence<int> lstSeq(items, 5);
-        lstSeq.set(10, 0);
+        lstSeq.set(12, 0).set(10, 0);
         IS_TRUE(lstSeq[0] == 10);
         lstSeq.insertAt(20, 1);
         IS_TRUE(lstSeq[1] == 20);
