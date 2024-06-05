@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include "../DataStructures/ArraySequence.h"
 #include "../DataStructures/ListSequence.h"
