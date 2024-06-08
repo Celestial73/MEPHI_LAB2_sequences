@@ -29,8 +29,9 @@ void testImmutableArraySequenceSetters()
     {
         int items[] = {1, 2, 3, 4, 5};
         ds::ImmutableArraySequence<int> arrSeq(items, 5);
-        ds::ImmutableArraySequence<int> seqWithSet = arrSeq.set(10, 0);
-        IS_TRUE((seqWithSet)[0] == 10);
+        ds::ImmutableArraySequence<int> *seqWithSet = arrSeq.set(10, 0);
+        IS_TRUE((*seqWithSet)[0] == 10);
+        delete seqWithSet;
         ds::ImmutableArraySequence<int> *seqWithInsert = arrSeq.insertAt(20, 1);
         IS_TRUE((*seqWithInsert)[1] == 20);
         delete seqWithInsert;
@@ -49,7 +50,7 @@ void testImmutableArraySequenceSetters()
     }
 }
 
-void testImmutableArraySequenceSizeConsturctor()
+void testImmutableArraySequenceSizeConstructor()
 {
     ds::ImmutableArraySequence<int> arrSeq(5);
     IS_TRUE(arrSeq.getSize() == 5);
@@ -75,6 +76,20 @@ void testImmutableArraySequenceBracketsOperator()
     ds::ImmutableArraySequence<int> arrSeq(items, 5);
     IS_TRUE(arrSeq[2] == 3);
     std::cout << "ImmutableArraySequence bracketsOperator test passed" << std::endl;
+}
+
+void testImmutableArrayGetSubSequence()
+{
+    int items1[] = {1, 2, 3, 4, 5};
+    ds::ImmutableArraySequence<int> arrSeq1(items1, 5);
+    ds::ImmutableArraySequence<int> *subSeq = arrSeq1.getSubsequence(1, 3);
+    IS_TRUE(subSeq->getSize() == 3);
+    for (size_t i = 0; i < 3; i++)
+    {
+        IS_TRUE(subSeq->get(i) == i + 2);
+    }
+    delete subSeq;
+    std::cout << "ImmutableArraySequence subSequence test passed" << std::endl;
 }
 
 void testImmutableArraySequenceConcat()
@@ -111,11 +126,13 @@ void testImmutableArraySequence()
     testImmutableArraySequenceBracketsOperator();
     testImmutableArraySequenceCopyConstructor();
     testImmutableArraySequenceConcat();
-    testImmutableArraySequenceSizeConsturctor();
+    testImmutableArrayGetSubSequence();
+    testImmutableArraySequenceSizeConstructor();
     testImmutableArraySequenceAssignmentOperator();
     testImmutableArraySequenceItemsConstructor();
     testImmutableArraySequenceSetters();
     testImmutableArraySequenceGetters();
+
     std::cout
         << "IMMUTABLE ARRAYSEQUENCE TESTS PASSED" << std::endl
         << std::endl;

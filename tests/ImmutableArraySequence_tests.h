@@ -6,7 +6,7 @@
 
 void testImmutableArraySequence();
 void testImmutableArraySequenceItemsConstructor();
-void testImmutableArraySequenceSizeConsturctor();
+void testImmutableArraySequenceSizeConstructor();
 void testImmutableArraySequenceCopyConstructor();
 void testImmutableArraySequenceGetters();
 void testImmutableArraySequenceSetters();

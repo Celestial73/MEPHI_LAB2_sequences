@@ -1,5 +1,5 @@
 #include <iostream>
-#include "menu.h"
+#include "Menu.h"
 
 int getIntegerInRange(int min, int max)
 {
@@ -46,7 +46,6 @@ void runTests()
     testLinkedList();
     testDynamicArray();
     testArraySequence();
-    // testImmutableArraySequence();
     testImmutableArraySequence();
     testListSequence();
 }

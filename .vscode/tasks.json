@@ -23,7 +23,7 @@
                 "-g",
                 "${fileDirname}\\UI\\PrintFunctions.cpp",
                 "-g",
-                "${fileDirname}\\UI\\Menu.cpp",
+                "${fileDirname}\\UI\\menu.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
